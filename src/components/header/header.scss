@@ -1,0 +1,14 @@
+.white-bg {
+  background-color: #fff !important;
+}
+.scroll-header {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.menu-button {
+  .button {
+    color: #333333;
+    &:hover {
+      color: #a51e27;
+    }
+  }
+}

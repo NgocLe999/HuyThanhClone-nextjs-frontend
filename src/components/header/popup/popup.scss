@@ -1,0 +1,15 @@
+.popup-categories {
+  display: flex;
+  flex-direction: column;
+  // justify-content: ;
+  align-items: baseline;
+  gap: 4px;
+  font-weight: 400;
+  h4 {
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .category {
+    margin: 0px 15px;
+  }
+}

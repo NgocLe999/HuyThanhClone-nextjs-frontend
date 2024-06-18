@@ -1,0 +1,40 @@
+:root {
+  --white: rgb(255, 255, 255);
+  --primary: #fe2c55;
+  --black: #000;
+  //Default layout
+  --default-layout-header-height: 60px;
+  --default-layout-width: 1528px;
+  --text-color: #333;
+}
+
+body {
+  font-size: 62.5%;
+  line-height: 1.5;
+  color: var(--text-color);
+  overflow-y: overlay;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.active {
+  color: #a51e27 !important;
+}
