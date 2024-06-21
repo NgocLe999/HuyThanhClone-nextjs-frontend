@@ -22,4 +22,24 @@ declare global {
     description: string;
     image: string;
   }
+  interface IProduct {
+    available: string;
+    description: string;
+    featured_image: string;
+    handle: string;
+    image: string[];
+    media: string;
+    price: number;
+    price_max: number;
+    price_min: number;
+    tag: string;
+    title: string;
+    type: string;
+    url: string;
+    pagetitle: string;
+    metadescription: string;
+    vendor: string;
+    not_allow_promotion: string;
+    sole_quantity: string;
+  }
 }

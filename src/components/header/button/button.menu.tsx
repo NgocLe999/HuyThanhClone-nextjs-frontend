@@ -10,6 +10,8 @@ import Button, { ButtonProps } from "@mui/material/Button";
 import { PopupCollections } from "../popup/popup.menu";
 import "~/header/header.scss";
 import PopupProduct from "../popup/popup.product";
+import PopupNews from "../popup/popup.news";
+import PopupService from "../popup/popup.service";
 
 const ButtonMenu = styled(Button)<ButtonProps>(({ theme }) => ({
   color: theme.palette.getContrastText("#a51e27"),
@@ -44,7 +46,7 @@ export const ButtonAboutUs = () => {
           fontSize: "16px",
         }}
       >
-        <ActiveLink href="/">VỀ CHÚNG TÔI</ActiveLink>
+        <ActiveLink href="/pages">VỀ CHÚNG TÔI</ActiveLink>
       </ButtonMenu>
     </>
   );
@@ -124,7 +126,6 @@ export const ButtonLabGrown = () => {
           <a className="button">NHẪN CẦU HÔN LAB-GROWN DIAMOND</a>
         </ActiveLink>
       </ButtonMenu>
-      ;
     </>
   );
 };
@@ -132,19 +133,27 @@ export const ButtonLabGrown = () => {
 export const ButtonNews = () => {
   return (
     <>
-      <ButtonMenu
-        className="menu-button"
-        sx={{
-          my: 2,
-          display: "block",
-          fontWeight: "bold",
-          fontSize: "16px",
-        }}
+      <HtmlTooltip
+        title={
+          <>
+            <PopupNews />
+          </>
+        }
       >
-        <ActiveLink href="/blogs/news" legacyBehavior>
-          <a className="button">TIN TỨC</a>
-        </ActiveLink>
-      </ButtonMenu>
+        <ButtonMenu
+          className="menu-button"
+          sx={{
+            my: 2,
+            display: "block",
+            fontWeight: "bold",
+            fontSize: "16px",
+          }}
+        >
+          <ActiveLink href="/blogs/news" legacyBehavior>
+            <a className="button">TIN TỨC</a>
+          </ActiveLink>
+        </ButtonMenu>
+      </HtmlTooltip>
     </>
   );
 };
@@ -152,19 +161,27 @@ export const ButtonNews = () => {
 export const ButtonServices = () => {
   return (
     <>
-      <ButtonMenu
-        className="menu-button"
-        sx={{
-          my: 2,
-          display: "block",
-          fontWeight: "bold",
-          fontSize: "16px",
-        }}
+      <HtmlTooltip
+        title={
+          <>
+            <PopupService />
+          </>
+        }
       >
-        <ActiveLink href="/pages/service" legacyBehavior>
-          <a className="button">DỊCH VỤ</a>
-        </ActiveLink>
-      </ButtonMenu>
+        <ButtonMenu
+          className="menu-button"
+          sx={{
+            my: 2,
+            display: "block",
+            fontWeight: "bold",
+            fontSize: "16px",
+          }}
+        >
+          <ActiveLink href="/pages/service" legacyBehavior>
+            <a className="button">DỊCH VỤ</a>
+          </ActiveLink>
+        </ButtonMenu>
+      </HtmlTooltip>
     </>
   );
 };

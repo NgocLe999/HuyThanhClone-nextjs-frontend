@@ -52,11 +52,8 @@ function HeaderMenu() {
         maxWidth="xl"
         sx={{
           flexGrow: 1,
-          display: {
-            xs: "none",
-            md: "flex",
-            justifyContent: "space-between",
-          },
+          display: "flex",
+          justifyContent: "space-between",
         }}
       >
         <ButtonAboutUs />

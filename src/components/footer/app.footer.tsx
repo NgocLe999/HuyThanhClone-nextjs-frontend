@@ -9,6 +9,8 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import "~/footer/footer.scss";
 import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
 import { useEffect, useState } from "react";
+import { Container } from "@mui/material";
+import DeliveryFooter from "./delivery.footer";
 
 const AppFooter = () => {
   const [display, setDisplay] = useState("none");
@@ -37,7 +39,7 @@ const AppFooter = () => {
   };
 
   return (
-    <>
+    <Container maxWidth="xl">
       <Box
         sx={{
           flexGrow: 1,
@@ -188,7 +190,8 @@ const AppFooter = () => {
           position: "fixed",
         }}
       />
-    </>
+      <DeliveryFooter />
+    </Container>
   );
 };
 export default AppFooter;

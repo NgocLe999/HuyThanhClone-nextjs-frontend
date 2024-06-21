@@ -1,10 +1,20 @@
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
+import { Box, Container } from "@mui/material";
 const DeliveryFooter = () => {
   return (
-    <div className="delivery-footer">
-      GIAO HÀNG TRONG 2H - MIỄN PHÍ
+    <Box
+      // maxWidth="xl"
+      className="delivery-footer"
+      sx={{
+        maxWidth: "1489px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <span>GIAO HÀNG TRONG 2H - MIỄN PHÍ</span>
       <LocalShippingOutlinedIcon />
-    </div>
+    </Box>
   );
 };
 export default DeliveryFooter;
