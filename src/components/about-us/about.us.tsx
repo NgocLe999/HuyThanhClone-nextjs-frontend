@@ -7,15 +7,6 @@ import Box from "@mui/material/Box";
 import { Container } from "@mui/material";
 import Image from "next/image";
 
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
-
 const AboutUs = (props: any) => {
   const { info } = props;
   return (
@@ -72,7 +63,7 @@ const AboutUs = (props: any) => {
                       >
                         {item.title}
                       </span>
-                      <div>{item.description}</div>
+                      <div>{item.description.replace("<br>"," ")}</div>
                     </Grid>
                   </Grid>
                 </Box>
@@ -125,7 +116,7 @@ const AboutUs = (props: any) => {
                     >
                       {item.title}
                     </span>
-                    <div>{item.description}</div>
+                    <div>{item.description.replace("<br>"," ")}</div>
                   </Grid>
                 </Grid>
               </>
@@ -163,7 +154,7 @@ const AboutUs = (props: any) => {
                     >
                       {item.title}
                     </span>
-                    <div>{item.description}</div>
+                    <div>{item.description.replace("<br>"," ")}</div>
                   </Grid>
                   <Grid item xs={6}>
                     <Image
@@ -185,7 +176,6 @@ const AboutUs = (props: any) => {
           }
         })}
       </Box>
-    
     </>
   );
 };

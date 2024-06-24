@@ -12,6 +12,7 @@ import "~/header/header.scss";
 import PopupProduct from "../popup/popup.product";
 import PopupNews from "../popup/popup.news";
 import PopupService from "../popup/popup.service";
+import { Transform } from "@mui/icons-material";
 
 const ButtonMenu = styled(Button)<ButtonProps>(({ theme }) => ({
   color: theme.palette.getContrastText("#a51e27"),
@@ -27,10 +28,12 @@ const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
     backgroundColor: "white",
     color: "rgba(0, 0, 0, 0.87)",
     fontSize: theme.typography.pxToRem(15),
-    // maxWidth: "100%",
-    maxWidth: "1525px",
+    maxWidth: "100%",
+    // maxWidth: "1525px",
     maxHeight: "500px",
     margin: "0px 50px",
+    
+    // transform: translate('162px', '136.533px'),
   },
 }));
 

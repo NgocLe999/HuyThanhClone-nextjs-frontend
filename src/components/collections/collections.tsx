@@ -15,7 +15,7 @@ import Stack from "@mui/material/Stack";
 import { purple } from "@mui/material/colors";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Link from "next/link";
-import { produce } from "immer";
+import { useRouter } from "next/navigation";
 
 function srcset(image: string, size: number, rows = 1, cols = 1) {
   return {
@@ -38,35 +38,44 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
 }));
 
 export function QuiltedImageList(props: any) {
+  const router = useRouter();
   const { productItem } = props;
+
   const productInfo = productItem.map((item: any, index: number) => {
+    const image = item.image.map((item: any) => item.src);
     return {
-      img: `${process.env.NEXT_PUBLIC_BACKEND_URL}/${item.featured_image.src}`,
-      img2: `${process.env.NEXT_PUBLIC_BACKEND_URL}/${item.image[1].src}`,
-      name: item.title,
+      id: item._id,
+      img: `${process.env.NEXT_PUBLIC_BACKEND_URL}/${image[image.length - 1]}`,
+      img2: `${process.env.NEXT_PUBLIC_BACKEND_URL}/${item.featured_image.src}`,
+      name: item.name,
       price: `${item.price.toLocaleString("en-US", {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0,
       })}đ`,
     };
   });
-  // console.log(productInfo);
+
   const productImage = productInfo.map((item: any, index: number) => {
-    if (index === 0) {
-      return Object.assign(item, { rows: 2, cols: 6 });
-    } else {
-      return Object.assign(item, { rows: 1, cols: 3 });
-    }
+    return Object.assign(item, { rows: 1, cols: 3 });
   });
-  console.log("productImage >>>>>>", productImage);
+
+  const handleClick = (id: string) => {
+    router.push(`/product/${id}`);
+  };
 
   return (
-    <ImageList variant="quilted" cols={15} rowHeight={370} gap={20}>
+    <ImageList
+      className="image-list"
+      variant="quilted"
+      cols={15}
+      rowHeight={370}
+      gap={20}
+    >
       {productImage.map((item: any, index: number) => (
         <>
           <ImageListItem
             className="grid_item"
-            key={index}
+            key={`unique-${index}-q`}
             cols={item.cols || 1}
             rows={item.rows || 1}
             sx={{
@@ -76,7 +85,9 @@ export function QuiltedImageList(props: any) {
               backgroundColor: "#fafafa",
               overflow: "hidden",
               gap: 1,
+              cursor: "pointer",
             }}
+            onClick={() => handleClick(item.id)}
           >
             <Box className="product-img" sx={{ position: "relative" }}>
               <Link className="link" href={"/"}>
@@ -84,7 +95,7 @@ export function QuiltedImageList(props: any) {
                   {...srcset(item.img, 121, item.rows, item.cols)}
                   alt={item.title}
                   loading="eager"
-                  key={index}
+                  key={`imgKey-${index}`}
                   style={{
                     width: "100%",
                     border: "1px solid #ccc",
@@ -96,7 +107,7 @@ export function QuiltedImageList(props: any) {
                   // src="/assets/img_service_4.webp"
                   alt={item.title}
                   // loading="eager"
-                  key={index}
+                  key={`imgKey2-${index}`}
                   style={{
                     objectFit: "cover",
                   }}
@@ -155,6 +166,7 @@ export function QuiltedImageList(props: any) {
                     }}
                     className="btn-buyNow"
                     variant="contained"
+                    onClick={() => alert("click me")}
                   >
                     MUA NGAY
                   </ColorButton>

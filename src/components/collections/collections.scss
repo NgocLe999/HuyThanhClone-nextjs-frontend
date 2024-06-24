@@ -13,6 +13,9 @@ h1 {
 .grid-item {
   background-color: #ccc;
 }
+// .grid-item:hover {
+//   cursor: pointer;
+// }
 
 .grid_item:hover > .product-img > .product-actions > .stack > .btn-left {
   transform: translateX(0);
@@ -57,4 +60,10 @@ h1 {
 
 .product-img img:nth-of-type(2):hover {
   opacity: 1;
+}
+
+.image-list {
+  grid-auto-flow: dense;
+  grid-template-columns: repeat(5, 1fr);
+  display: grid;
 }
