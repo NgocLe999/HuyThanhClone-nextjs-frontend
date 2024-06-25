@@ -59,7 +59,7 @@ export function QuiltedImageList(props: any) {
     return Object.assign(item, { rows: 1, cols: 3 });
   });
 
-  const handleClick = (id: string) => {
+ const handleClick = (id: string) => {
     router.push(`/product/${id}`);
   };
 
@@ -98,8 +98,9 @@ export function QuiltedImageList(props: any) {
                   key={`imgKey-${index}`}
                   style={{
                     width: "100%",
-                    border: "1px solid #ccc",
+                    border: "1px solid #cccccc",
                     objectFit: "cover",
+                    borderRadius: "10px",
                   }}
                 />
                 <img
@@ -110,6 +111,7 @@ export function QuiltedImageList(props: any) {
                   key={`imgKey2-${index}`}
                   style={{
                     objectFit: "cover",
+                    borderRadius: "10px",
                   }}
                 />
               </Link>

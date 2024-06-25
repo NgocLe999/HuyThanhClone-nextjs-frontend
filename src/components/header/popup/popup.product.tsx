@@ -48,6 +48,7 @@ const popupData = [
   },
 ];
 const PopupProduct = () => {
+  const handleClick = () => {};
   return (
     <Container
       maxWidth="xl"
@@ -67,7 +68,11 @@ const PopupProduct = () => {
             <h4>{item.title}</h4>
             {item.categories.map((category: any, index: number) => {
               return (
-                <span className="category" key={index}>
+                <span
+                  onClick={() => handleClick()}
+                  className="category"
+                  key={index}
+                >
                   {category}
                 </span>
               );
