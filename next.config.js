@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
+  reactStrictMode: false,
   images: {
     formats: ["image/avif", "image/webp"],
     unoptimized: true,

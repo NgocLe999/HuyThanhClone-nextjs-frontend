@@ -1,7 +1,6 @@
 "use client";
 import { Box, Container, Fade, Grid, IconButton, styled } from "@mui/material";
 import "~/collections/collections.scss";
-import * as React from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -16,6 +15,8 @@ import { purple } from "@mui/material/colors";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import ThemeProvider, { ThemeContext } from "app/theme-provider";
 
 function srcset(image: string, size: number, rows = 1, cols = 1) {
   return {
@@ -39,7 +40,8 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
 
 export function QuiltedImageList(props: any) {
   const router = useRouter();
-  const { productItem } = props;
+  //@ts-ignore
+  const { productItem, setIsShowHide, setIdProduct  } = props
 
   const productInfo = productItem.map((item: any, index: number) => {
     const image = item.image.map((item: any) => item.src);
@@ -59,10 +61,10 @@ export function QuiltedImageList(props: any) {
     return Object.assign(item, { rows: 1, cols: 3 });
   });
 
- const handleClick = (id: string) => {
-    router.push(`/product/${id}`);
+  const handlePopupView = (id: string) => {
+    setIdProduct(id);
+    setIsShowHide(true);
   };
-
   return (
     <ImageList
       className="image-list"
@@ -87,10 +89,9 @@ export function QuiltedImageList(props: any) {
               gap: 1,
               cursor: "pointer",
             }}
-            onClick={() => handleClick(item.id)}
           >
             <Box className="product-img" sx={{ position: "relative" }}>
-              <Link className="link" href={"/"}>
+              <Link className="link" href={`/product/${item.id}`}>
                 <img
                   {...srcset(item.img, 121, item.rows, item.cols)}
                   alt={item.title}
@@ -98,9 +99,9 @@ export function QuiltedImageList(props: any) {
                   key={`imgKey-${index}`}
                   style={{
                     width: "100%",
-                    border: "1px solid #cccccc",
                     objectFit: "cover",
                     borderRadius: "10px",
+                    backgroundColor: "white",
                   }}
                 />
                 <img
@@ -154,6 +155,7 @@ export function QuiltedImageList(props: any) {
                       height: "40px",
                       left: "15%",
                     }}
+                    onClick={() => handlePopupView(item.id)}
                   >
                     <VisibilityIcon />
                   </IconButton>
@@ -168,7 +170,6 @@ export function QuiltedImageList(props: any) {
                     }}
                     className="btn-buyNow"
                     variant="contained"
-                    onClick={() => alert("click me")}
                   >
                     MUA NGAY
                   </ColorButton>
@@ -226,6 +227,8 @@ export function QuiltedImageList(props: any) {
 
 const CollectionsPage = (props: any) => {
   const { productItem } = props;
+  //@ts-ignore
+  const { setIsShowHide, setIdProduct } = useContext(ThemeContext);
   return (
     <Container maxWidth="xl">
       <h1>TẤT CẢ SẢN PHẨM</h1>
@@ -235,7 +238,11 @@ const CollectionsPage = (props: any) => {
         <div>Sắp xếp theo</div>
         <KeyboardArrowDownIcon />
       </div>
-      <QuiltedImageList productItem={productItem} />
+      <QuiltedImageList
+        productItem={productItem}
+        setIsShowHide={setIsShowHide}
+        setIdProduct={setIdProduct}
+      />
     </Container>
   );
 };

@@ -12,7 +12,6 @@ const ProductDetailService = async ({
     method: "GET",
   });
   const productDetails = res?.data ?? [];
-
   //@ts-ignore
   // const productItem = res?.data?.result ?? [];
   // console.log("productItem", productItem);

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { PropsWithChildren, useEffect, useRef } from "react";
 
 import { Carousel as NativeCarousel } from "@fancyapps/ui";
@@ -16,7 +16,7 @@ interface Props {
 const defaults: Partial<OptionsType> = {
   Dots: false,
   Thumbs: {
-    type: "modern",
+    type: "classic",
   },
 };
 

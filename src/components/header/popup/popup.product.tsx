@@ -1,4 +1,6 @@
 import { Container } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { toNamespacedPath } from "path";
 import "~/header/popup/popup.scss";
 
 const popupData = [
@@ -6,7 +8,6 @@ const popupData = [
     title: "TRANG SỨC",
     categories: [
       "Bông Tai",
-      "Nhẫn Nữ",
       "Mặt Dây Chuyền",
       "Bộ Trang Sức",
       "Dây Chuyền",
@@ -24,7 +25,7 @@ const popupData = [
     categories: [
       "Nhẫn Cưới đá CZ",
       "Nhẫn cưới Kim Cương Lab-Grown",
-      "Nhẫn Cưới Đá Kim Cương Thiên Nhiên",
+      "Nhẫn Cưới Kim Cương Thiên Nhiên",
       "Nhẫn Cưới Moissanite",
       "Nhẫn Cưới Plati",
     ],
@@ -47,8 +48,23 @@ const popupData = [
     categories: ["Vòng Cổ", "Vòng Tay", "Vàng Miếng"],
   },
 ];
+
+const convertString = (string: string) => {
+  // Convert the stringing to lowercase
+  return string
+    .normalize("NFD") // Normalize to decompose special characters
+    .replace(/Đ/g, "D") // Replace 'Đ' with 'D'
+    .replace(/đ/g, "d")
+    .replace(/[\u0300-\u036f]/g, "") // Remove diacritical marks
+    .replace(/\s+/g, "-") // Replace spaces with hyphens
+    .toLowerCase(); // Convert to lowercase
+};
 const PopupProduct = () => {
-  const handleClick = () => {};
+  const router = useRouter();
+  const handleClick = (name: string) => {
+    router.push(`/collections/${name}`);
+  };
+
   return (
     <Container
       maxWidth="xl"
@@ -69,9 +85,10 @@ const PopupProduct = () => {
             {item.categories.map((category: any, index: number) => {
               return (
                 <span
-                  onClick={() => handleClick()}
+                  onClick={() => handleClick(convertString(category))}
                   className="category"
                   key={index}
+                  style={{ cursor: "pointer" }}
                 >
                   {category}
                 </span>
