@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import TemporaryCartDrawer from "~/cart-drawer/cart.drawer";
 import AppFooter from "~/footer/app.footer";
 import DeliveryFooter from "~/footer/delivery.footer";
 import AppHeader from "~/header/app.header";
@@ -18,6 +19,8 @@ export default function RootLayout({
       <AppHeader />
 
       {children}
+      <PopupPreviewViewProduct />
+      <TemporaryCartDrawer />
       <AppFooter />
     </>
   );

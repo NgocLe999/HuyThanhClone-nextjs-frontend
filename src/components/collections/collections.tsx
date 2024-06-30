@@ -10,13 +10,17 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Button, { ButtonProps } from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import { purple } from "@mui/material/colors";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useContext } from "react";
-import ThemeProvider, { ThemeContext } from "app/theme-provider";
+import { useAppDispatch } from "~/lib/redux/hooks";
+import {
+  fetchProductById,
+  setShowProduct,
+} from "~/lib/redux/slice/productSlice";
+import {
+  fetchProductAddCart,
+  setShowCart,
+} from "~/lib/redux/slice/cartDrawerSlice";
 
 function srcset(image: string, size: number, rows = 1, cols = 1) {
   return {
@@ -39,9 +43,9 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
 }));
 
 export function QuiltedImageList(props: any) {
-  const router = useRouter();
-  //@ts-ignore
-  const { productItem, setIsShowHide, setIdProduct  } = props
+  const dispatch = useAppDispatch();
+  
+  const { productItem } = props;
 
   const productInfo = productItem.map((item: any, index: number) => {
     const image = item.image.map((item: any) => item.src);
@@ -61,10 +65,15 @@ export function QuiltedImageList(props: any) {
     return Object.assign(item, { rows: 1, cols: 3 });
   });
 
-  const handlePopupView = (id: string) => {
-    setIdProduct(id);
-    setIsShowHide(true);
+  const handlePopupView = async (id: string) => {
+    await dispatch(fetchProductById(id));
   };
+
+  const handleCartDrawer = async  (id: string) => {
+    await dispatch(fetchProductAddCart(id));
+    
+  };
+
   return (
     <ImageList
       className="image-list"
@@ -167,11 +176,14 @@ export function QuiltedImageList(props: any) {
                       position: "absolute",
                       bottom: 0,
                       height: "40px",
+                      backgroundColor: "#E25050",
                     }}
                     className="btn-buyNow"
                     variant="contained"
                   >
-                    MUA NGAY
+                    <Link href={`/checkout`} style={{ color: "white" }}>
+                      MUA NGAY{" "}
+                    </Link>
                   </ColorButton>
                   <IconButton
                     className="btn-right"
@@ -192,6 +204,7 @@ export function QuiltedImageList(props: any) {
                       right: "15%",
                       height: "40px",
                     }}
+                    onClick={() => handleCartDrawer(item.id)}
                   >
                     <AddShoppingCartIcon />
                   </IconButton>
@@ -227,8 +240,6 @@ export function QuiltedImageList(props: any) {
 
 const CollectionsPage = (props: any) => {
   const { productItem } = props;
-  //@ts-ignore
-  const { setIsShowHide, setIdProduct } = useContext(ThemeContext);
   return (
     <Container maxWidth="xl">
       <h1>TẤT CẢ SẢN PHẨM</h1>
@@ -238,11 +249,7 @@ const CollectionsPage = (props: any) => {
         <div>Sắp xếp theo</div>
         <KeyboardArrowDownIcon />
       </div>
-      <QuiltedImageList
-        productItem={productItem}
-        setIsShowHide={setIsShowHide}
-        setIdProduct={setIdProduct}
-      />
+      <QuiltedImageList productItem={productItem} />
     </Container>
   );
 };

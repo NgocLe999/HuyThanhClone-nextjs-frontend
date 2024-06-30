@@ -28,12 +28,12 @@ const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
     backgroundColor: "white",
     color: "rgba(0, 0, 0, 0.87)",
     fontSize: theme.typography.pxToRem(15),
-    maxWidth: "100%",
     // maxWidth: "1525px",
-    maxHeight: "500px",
-    margin: "0px 50px",
-    
-    // transform: translate('162px', '136.533px'),
+    minHeight: "250px",
+    minWidth: "1400px",
+    margin: "0 60px",
+    padding: 1,
+    position: "relative",
   },
 }));
 

@@ -28,6 +28,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/components/home-page"
-  ],
+, "src/components/lib/hooks.tsx"  ],
   "exclude": ["node_modules"]
 }

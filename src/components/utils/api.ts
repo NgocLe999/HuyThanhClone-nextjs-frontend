@@ -1,5 +1,4 @@
 import queryString from "query-string";
-import slugify from "slugify";
 
 export const sendRequest = async <T>(props: IRequest) => {
   let {
@@ -41,17 +40,11 @@ export const sendRequest = async <T>(props: IRequest) => {
   });
 };
 
-// export const fetchDefaultImage = (type: string) => {
-//   if (type === "GITHUB") return "/user/default-github.png";
-//   if (type === "GOOGLE") return "/user/default-google.png";
-//   return "/user/default-user.png";
-// };
-
-// export const convertSlugUrl = (str: string) => {
-//   const slugPrarams = slugify(str, {
-//     replacement: "-", // replace spaces with replacement character, defaults to `-`
-//     lower: true, // convert to lower case, defaults to `false`
-//     locale: "vi", // language code of the locale to use
-//   });
-//   return slugPrarams;
-// };
+export const callFetchProductDetails = async (id: string) => {
+  const res = await sendRequest<IBackendRes<IProduct>>({
+    url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/product/${id}`,
+    method: "GET",
+  });
+  const productDetails = res?.data ?? [];
+  return productDetails;
+};

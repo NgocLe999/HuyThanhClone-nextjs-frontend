@@ -1,4 +1,5 @@
 import { Container } from "@mui/material";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toNamespacedPath } from "path";
 import "~/header/popup/popup.scss";
@@ -61,37 +62,37 @@ const convertString = (string: string) => {
 };
 const PopupProduct = () => {
   const router = useRouter();
-  const handleClick = (name: string) => {
-    router.push(`/collections/${name}`);
-  };
+  // const handleClick = (name: string) => {
+  //   router.push(`/collections/${name}`);
+  // };
 
   return (
     <Container
-      maxWidth="xl"
       sx={{
         display: "flex",
         justifyItems: "space-between",
-        width: "100%",
-        height: "100%",
+        minHeight: "100%",
         marginBottom: "40px",
-        marginTop: "40px",
         gap: "40px",
+        minWidth: "100%",
+        position: "absolute",
+        top: 0,
       }}
     >
       {popupData.map((item: any, index: number) => {
         return (
           <div className="popup-categories" key={index}>
             <h4>{item.title}</h4>
+
             {item.categories.map((category: any, index: number) => {
               return (
-                <span
-                  onClick={() => handleClick(convertString(category))}
-                  className="category"
+                <Link
                   key={index}
                   style={{ cursor: "pointer" }}
+                  href={`/collections/${convertString(category)}`}
                 >
                   {category}
-                </span>
+                </Link>
               );
             })}
           </div>
