@@ -1,4 +1,3 @@
-
 import ProgressBarWrapper from "../components/lib/progress.bar";
 import ThemeRegistry from "../components/theme-registry/theme.registry";
 import "./styles/global.scss";
@@ -7,7 +6,8 @@ import { Suspense } from "react";
 import Loading from "./(guest)/loading";
 import StoreProvider from "./storeProvider";
 import dynamic from "next/dynamic";
-
+import { ToastContainer } from "react-toastify";
+import { ToastProvider } from "~/custom-hook/useToast";
 export const metadata: Metadata = {
   title: "Huy Thanh Jewerly | Trang Chủ",
   description: "Huy Thanh Jewerly",
@@ -24,14 +24,12 @@ export default function RootLayout({
           <Suspense fallback={<Loading />}>
             <ThemeRegistry>
               <ProgressBarWrapper>
-                {children}
+                <ToastProvider>{children}</ToastProvider>
                 {/* 
             <NextAuthSession>
-              <TrackContextProvider>
-                // <ToastProvider>{children}</ToastProvider>
-              </TrackContextProvider>s
             </NextAuthSession>
            */}
+                <ToastContainer />
               </ProgressBarWrapper>
             </ThemeRegistry>
           </Suspense>

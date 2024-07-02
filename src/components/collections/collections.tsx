@@ -21,6 +21,7 @@ import {
   fetchProductAddCart,
   setShowCart,
 } from "~/lib/redux/slice/cartDrawerSlice";
+import { useToast } from "~/custom-hook/useToast";
 
 function srcset(image: string, size: number, rows = 1, cols = 1) {
   return {
@@ -44,7 +45,7 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
 
 export function QuiltedImageList(props: any) {
   const dispatch = useAppDispatch();
-  
+  const toast = useToast();
   const { productItem } = props;
 
   const productInfo = productItem.map((item: any, index: number) => {
@@ -69,9 +70,9 @@ export function QuiltedImageList(props: any) {
     await dispatch(fetchProductById(id));
   };
 
-  const handleCartDrawer = async  (id: string) => {
+  const handleCartDrawer = async (id: string) => {
     await dispatch(fetchProductAddCart(id));
-    
+    toast.success("THÊM SẢN PHẨM VÀO GIỎ HÀNG THÀNH CÔNG!");
   };
 
   return (

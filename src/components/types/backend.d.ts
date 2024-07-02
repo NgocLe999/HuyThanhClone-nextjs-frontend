@@ -45,7 +45,7 @@ declare global {
     material: string;
     vendor: string;
     not_allow_promotion: string;
-    sole_quantity: string;
+    sole_quantity: number;
     collection: string;
     weight: string;
   }

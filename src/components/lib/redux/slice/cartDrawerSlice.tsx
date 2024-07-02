@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AnyNsRecord } from "dns";
 import { callFetchProductDetails } from "~/utils/api";
-
+import { produce } from "immer";
+import { dark } from "@mui/material/styles/createPalette";
+import { Satellite } from "@mui/icons-material";
 // First, create the thunk
 export const fetchProductAddCart = createAsyncThunk(
   "product/fetchProductAddCart", // action.type
@@ -10,14 +12,20 @@ export const fetchProductAddCart = createAsyncThunk(
     return response ?? [];
   }
 );
+
 interface IState {
   isFetching: boolean;
   isOpenCart: boolean;
+  totalPay: number;
+  note: string;
   data: IProduct[];
 }
+
 const initialState: IState = {
   isFetching: true,
   isOpenCart: false,
+  totalPay: 0,
+  note: "",
   data: [],
 };
 
@@ -29,12 +37,48 @@ const cartDrawerSlice = createSlice({
     setShowCart: (state, action) => {
       state.isOpenCart = action.payload;
     },
+
     deleteProductCart: (state, action) => {
-      console.log("check action.payload", action.payload);
       const productRemaning = state.data.filter(
         (product) => product._id !== action.payload
       );
       state.data = productRemaning;
+    },
+
+    increaseProduct: (state, action) => {
+      const indexProduct = state.data.findIndex(
+        (product) => product._id === action.payload
+      );
+      if (indexProduct !== -1) {
+        state.data[indexProduct].sole_quantity =
+          state.data[indexProduct].sole_quantity + 1;
+      }
+      const total = state.data.reduce(
+        (acc, currentValue) =>
+          acc + currentValue.price * currentValue.sole_quantity,
+        0
+      );
+      state.totalPay = total;
+    },
+    decreaseProduct: (state, action) => {
+      const indexProduct = state.data.findIndex(
+        (product) => product._id === action.payload
+      );
+      if (indexProduct !== -1) {
+        if (state.data[indexProduct].sole_quantity !== 0) {
+          state.data[indexProduct].sole_quantity =
+            state.data[indexProduct].sole_quantity - 1;
+        } else state.data[indexProduct].sole_quantity = 0;
+      }
+      const total = state.data.reduce(
+        (acc, currentValue) =>
+          acc + currentValue.price * currentValue.sole_quantity,
+        0
+      );
+      state.totalPay = total;
+    },
+    noteOrder: (state, action) => {
+      state.note = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -49,25 +93,37 @@ const cartDrawerSlice = createSlice({
 
     builder.addCase(fetchProductAddCart.fulfilled, (state, action) => {
       if (action && action.payload) {
+        //@ts-ignore
+        state.totalPay = state.totalPay + action.payload.price;
+        //reset_quantity: Lỗi backend
+        const payload = produce(action.payload, (draft: IProduct) => {
+          draft.sole_quantity = 1;
+        });
+
         state.isOpenCart = true;
         state.isFetching = false;
 
         const isExist = state.data.findIndex(
           //@ts-ignore
-          (item) => item._id === action.payload._id
+          (item) => item._id === payload._id
         );
         if (isExist !== -1) {
           return;
         } else {
           //@ts-ignore
-          state.data.push(action.payload);
+          state.data.push(payload);
         }
       }
-      22;
     });
   },
 });
 
-export const { setShowCart, deleteProductCart } = cartDrawerSlice.actions;
+export const {
+  setShowCart,
+  deleteProductCart,
+  increaseProduct,
+  decreaseProduct,
+  noteOrder,
+} = cartDrawerSlice.actions;
 
 export default cartDrawerSlice.reducer;

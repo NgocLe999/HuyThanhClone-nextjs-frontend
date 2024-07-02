@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { ToastContainer } from "react-toastify";
 import TemporaryCartDrawer from "~/cart-drawer/cart.drawer";
 import AppFooter from "~/footer/app.footer";
 import DeliveryFooter from "~/footer/delivery.footer";

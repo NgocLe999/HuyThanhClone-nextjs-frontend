@@ -9,10 +9,15 @@ import Image from "next/image";
 import { sendRequest } from "~/utils/api";
 import { useAppDispatch, useAppSelector } from "~/lib/redux/hooks";
 import { setShowProduct } from "~/lib/redux/slice/productSlice";
+import {
+  fetchProductAddCart,
+  setShowCart,
+} from "~/lib/redux/slice/cartDrawerSlice";
+import { useToast } from "~/custom-hook/useToast";
+import { toArray } from "lodash";
 
 const style = {
   position: "absolute" as "absolute",
-
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
@@ -48,6 +53,15 @@ export default function PopupPreviewViewProduct(props: any) {
 
 export const ModalDetailProduct = (props: any) => {
   const { productDetails } = props;
+  const dispatch = useAppDispatch();
+  const toast = useToast();
+
+  const handleAddToCart = async (id: string) => {
+    dispatch(setShowCart(true));
+    await dispatch(fetchProductAddCart(id));
+    dispatch(setShowProduct(false));
+    toast.success("THÊM SẢN PHẨM VÀO GIỎ HÀNG THÀNH CÔNG!");
+  };
   return (
     <Box sx={style}>
       <Grid container spacing={2} columns={16} sx={{ overflow: "hidden" }}>
@@ -124,6 +138,7 @@ export const ModalDetailProduct = (props: any) => {
                 },
               }}
               variant="contained"
+              onClick={() => handleAddToCart(productDetails._id)}
             >
               THÊM VÀO GIỎ HÀNG
             </Button>
