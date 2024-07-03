@@ -1,37 +1,42 @@
-import * as React from 'react';
+import * as React from "react";
 
-import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import { useAppSelector } from "~/lib/redux/hooks";
 
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
+const addresses = ["1 MUI Drive", "Reactville", "Anytown", "99999", "USA"];
 const payments = [
-  { name: 'Card type:', detail: 'Visa' },
-  { name: 'Card holder:', detail: 'Mr. John Smith' },
-  { name: 'Card number:', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date:', detail: '04/2024' },
+  { name: "Card type:", detail: "Visa" },
+  { name: "Card holder:", detail: "Mr. John Smith" },
+  { name: "Card number:", detail: "xxxx-xxxx-xxxx-1234" },
+  { name: "Expiry date:", detail: "04/2024" },
 ];
 
 export default function Review() {
+  const previewOrder = useAppSelector((state) => state.cart);
   return (
     <Stack spacing={2}>
       <List disablePadding>
         <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary="Products" secondary="4 selected" />
-          <Typography variant="body2">$134.98</Typography>
+          <ListItemText
+            primary="Products"
+            secondary={`0${previewOrder.data.length} sản phẩm đã chọn`}
+          />
+          <Typography variant="body2">{`${previewOrder.totalPay.toLocaleString()} VNĐ`}</Typography>
         </ListItem>
         <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary="Shipping" secondary="Plus taxes" />
-          <Typography variant="body2">$9.99</Typography>
+          <ListItemText primary="Phí ship" secondary="JT Express" />
+          <Typography variant="body2">30,000 VNĐ</Typography>
         </ListItem>
         <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary="Total" />
+          <ListItemText primary="Tổng thanh toán" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            $144.97
+            {`${(previewOrder.totalPay + 30000).toLocaleString()} VNĐ`}
           </Typography>
         </ListItem>
       </List>
@@ -44,11 +49,27 @@ export default function Review() {
       >
         <div>
           <Typography variant="subtitle2" gutterBottom>
-            Shipment details
+            CHI TIẾT THÔNG TIN GỬI HÀNG:
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography color="text.secondary" gutterBottom>
-            {addresses.join(', ')}
+          <Typography gutterBottom>
+            <strong>Họ Và Tên: </strong>
+            {previewOrder.infoOrder.fullName}
+          </Typography>
+          <Typography gutterBottom>
+            <strong>Address: </strong>
+            {previewOrder.infoOrder.address}
+          </Typography>
+          <Typography gutterBottom>
+            <strong>Phone: </strong>
+            {previewOrder.infoOrder.phone}
+          </Typography>
+          <Typography gutterBottom>
+            <strong>Email: </strong>
+            {previewOrder.infoOrder.email}
+          </Typography>
+          <Typography gutterBottom>
+            <strong>Note: </strong>
+            {previewOrder.infoOrder.note}
           </Typography>
         </div>
         <div>
@@ -62,7 +83,7 @@ export default function Review() {
                   direction="row"
                   spacing={1}
                   useFlexGap
-                  sx={{ width: '100%', mb: 1 }}
+                  sx={{ width: "100%", mb: 1 }}
                 >
                   <Typography variant="body1" color="text.secondary">
                     {payment.name}

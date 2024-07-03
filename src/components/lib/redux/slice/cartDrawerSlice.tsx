@@ -17,6 +17,13 @@ interface IState {
   isFetching: boolean;
   isOpenCart: boolean;
   totalPay: number;
+  infoOrder: {
+    fullName: string;
+    address: string;
+    phone: string;
+    email: string;
+    note: string;
+  };
   note: string;
   data: IProduct[];
 }
@@ -25,6 +32,13 @@ const initialState: IState = {
   isFetching: true,
   isOpenCart: false,
   totalPay: 0,
+  infoOrder: {
+    fullName: "",
+    address: "",
+    phone: "",
+    email: "",
+    note: "",
+  },
   note: "",
   data: [],
 };
@@ -80,6 +94,9 @@ const cartDrawerSlice = createSlice({
     noteOrder: (state, action) => {
       state.note = action.payload;
     },
+    checkoutOrder: (state, action) => {
+      state.infoOrder = action.payload;
+    },
   },
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
@@ -124,6 +141,7 @@ export const {
   increaseProduct,
   decreaseProduct,
   noteOrder,
+  checkoutOrder,
 } = cartDrawerSlice.actions;
 
 export default cartDrawerSlice.reducer;

@@ -45,7 +45,7 @@ export default function Info({ totalPrice }: InfoProps) {
       <Typography variant="h4" gutterBottom>
         {orderedProduct.totalPay.toLocaleString()} VNĐ
       </Typography>
-      <List disablePadding>
+      <List disablePadding sx={{ minWidth: 370 }}>
         {orderedProduct.data.map((product) => (
           <ListItem key={product.name} sx={{ py: 1, px: 2 }}>
             <img
@@ -72,6 +72,14 @@ export default function Info({ totalPrice }: InfoProps) {
           </ListItem>
         ))}
       </List>
+      <Typography
+        variant="body1"
+        fontWeight="medium"
+        sx={{ marginTop: "20px" }}
+      >
+        <strong>GHI CHÚ: </strong>
+        <span>{orderedProduct.note}</span>
+      </Typography>
     </React.Fragment>
   );
 }

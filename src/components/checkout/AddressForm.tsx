@@ -5,123 +5,126 @@ import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { styled } from "@mui/system";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { Button } from "@mui/material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CheckIcon from "@mui/icons-material/Check";
+import { useAppDispatch, useAppSelector } from "~/lib/redux/hooks";
+import { checkoutOrder } from "~/lib/redux/slice/cartDrawerSlice";
 
 const FormGrid = styled(Grid)(() => ({
   display: "flex",
   flexDirection: "column",
 }));
 
-export default function AddressForm() {
+interface IState {
+  fullName: string;
+  address: string;
+  phone: string;
+  email: string;
+  note: string;
+}
+// type Inputs = {
+//   example: string;
+//   exampleRequired: string;
+// };
+
+export default function AddressForm(props: any) {
+  const dispatch = useAppDispatch();
+  const state = useAppSelector((state) => state.cart);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<IState>();
+  const [color, setColor] = React.useState("warning");
+  const onSubmit: SubmitHandler<IState> = (data) => {
+    setColor("success");
+    dispatch(checkoutOrder(data));
+  };
+  console.log("check state:", state);
   return (
-    <Grid container spacing={3}>
-      <FormGrid item xs={12} md={6}>
-        <FormLabel htmlFor="first-name" required>
-          First name
-        </FormLabel>
-        <OutlinedInput
-          id="first-name"
-          name="first-name"
-          type="name"
-          placeholder="John"
-          autoComplete="first name"
-          required
-        />
-      </FormGrid>
-      <FormGrid item xs={12} md={6}>
-        <FormLabel htmlFor="last-name" required>
-          Last name
-        </FormLabel>
-        <OutlinedInput
-          id="last-name"
-          name="last-name"
-          type="last-name"
-          placeholder="Snow"
-          autoComplete="last name"
-          required
-        />
-      </FormGrid>
+    <form
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "20px",
+      }}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <FormGrid item xs={12}>
-        <FormLabel htmlFor="address1" required>
-          Address line 1
+        <FormLabel htmlFor="Name" required>
+          Họ và Tên
         </FormLabel>
         <OutlinedInput
-          id="address1"
-          name="address1"
-          type="address1"
-          placeholder="Street name and number"
+          placeholder=""
           autoComplete="shipping address-line1"
           required
+          {...register("fullName")}
         />
       </FormGrid>
       <FormGrid item xs={12}>
-        <FormLabel htmlFor="address2">Address line 2</FormLabel>
-        <OutlinedInput
-          id="address2"
-          name="address2"
-          type="address2"
-          placeholder="Apartment, suite, unit, etc. (optional)"
-          autoComplete="shipping address-line2"
-          required
-        />
-      </FormGrid>
-      <FormGrid item xs={6}>
-        <FormLabel htmlFor="city" required>
-          City
+        <FormLabel htmlFor="address" required>
+          Địa chỉ
         </FormLabel>
         <OutlinedInput
-          id="city"
-          name="city"
-          type="city"
-          placeholder="New York"
-          autoComplete="City"
+          placeholder=""
+          autoComplete="shipping address-line1"
           required
-        />
-      </FormGrid>
-      <FormGrid item xs={6}>
-        <FormLabel htmlFor="state" required>
-          State
-        </FormLabel>
-        <OutlinedInput
-          id="state"
-          name="state"
-          type="state"
-          placeholder="NY"
-          autoComplete="State"
-          required
-        />
-      </FormGrid>
-      <FormGrid item xs={6}>
-        <FormLabel htmlFor="zip" required>
-          Zip / Postal code
-        </FormLabel>
-        <OutlinedInput
-          id="zip"
-          name="zip"
-          type="zip"
-          placeholder="12345"
-          autoComplete="shipping postal-code"
-          required
-        />
-      </FormGrid>
-      <FormGrid item xs={6}>
-        <FormLabel htmlFor="country" required>
-          Country
-        </FormLabel>
-        <OutlinedInput
-          id="country"
-          name="country"
-          type="country"
-          placeholder="United States"
-          autoComplete="shipping country"
-          required
+          {...register("address")}
         />
       </FormGrid>
       <FormGrid item xs={12}>
-        <FormControlLabel
-          control={<Checkbox name="saveAddress" value="yes" />}
-          label="Use this address for payment details"
+        <FormLabel htmlFor="phone" required>
+          Số điện thoại
+        </FormLabel>
+        <OutlinedInput
+          placeholder=""
+          autoComplete="shipping address-line1"
+          required
+          {...register("phone")}
         />
       </FormGrid>
-    </Grid>
+      <FormGrid item xs={12}>
+        <FormLabel htmlFor="email" required>
+          Email
+        </FormLabel>
+        <OutlinedInput
+          placeholder=""
+          autoComplete="shipping address-line1"
+          required
+          {...register("email")}
+        />
+      </FormGrid>
+      <FormGrid item xs={12}>
+        <FormLabel htmlFor="note" required>
+          Ghi chú cho shipper
+        </FormLabel>
+        <OutlinedInput
+          placeholder=""
+          autoComplete="shipping address-line1"
+          required
+          {...register("note")}
+        />
+      </FormGrid>
+      <Button
+        type="submit"
+        variant="contained"
+        //@ts-ignore
+        color={color}
+        endIcon={color === "warning" ? "" : <CheckCircleOutlineIcon />}
+        sx={{
+          width: { xs: "100%", sm: "fit-content" },
+          "&:hover": {
+            backgroundColor: "#51BC51;",
+            color: "black",
+            fontWeight: 600,
+          },
+        }}
+      >
+        Xác nhận thông tin đã chính xác!
+      </Button>
+    </form>
   );
 }

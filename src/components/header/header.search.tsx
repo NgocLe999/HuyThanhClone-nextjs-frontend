@@ -32,7 +32,6 @@ const HeaderSearch = () => {
         });
         //@ts-ignore
         setResults(res?.data?.result);
-        console.log("call api");
         setDisplaySearch("flex");
       } else {
         setResults([]);
@@ -40,11 +39,13 @@ const HeaderSearch = () => {
     }, 500),
     []
   );
+
   useEffect(() => {
     return () => {
       debouncedSearch.cancel();
     };
   }, [debouncedSearch]);
+
   const handleChange = (value: string) => {
     setQuery(value);
     debouncedSearch(value);

@@ -31,6 +31,8 @@ import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 import ToggleColorMode from "./ToggleColorMode";
 import Link from "next/link";
+import { useAppSelector } from "~/lib/redux/hooks";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 interface ToggleCustomThemeProps {
   showCustomTheme: Boolean;
@@ -75,7 +77,12 @@ function ToggleCustomTheme({
   );
 }
 
-const steps = ["Shipping address", "Payment details", "Review your order"];
+// const steps = ["Shipping address", "Payment details", "Review your order"];
+const steps = [
+  "Thông tin giao hàng",
+  "Phương thức thanh toán",
+  "Kiểm tra lại đơn hàng",
+];
 
 const logoStyle = {
   width: "140px",
@@ -92,17 +99,40 @@ function getStepContent(step: number) {
       return <PaymentForm />;
     case 2:
       return <Review />;
-    default:
       throw new Error("Unknown step");
   }
 }
 
+interface IState {
+  firstName: string;
+  lastName: string;
+  apartmentNumber: string;
+  streetNumber: string;
+  district: string;
+  city: string;
+  zipCode: string;
+  countryZip: string;
+}
+
 export default function Checkout() {
+  const initAddress = {
+    firstName: "",
+    lastName: "",
+    apartmentNumber: "",
+    streetNumber: "",
+    district: "",
+    city: "",
+    zipCode: "",
+    countryZip: "",
+  };
+  const [address, setAddress] = React.useState<IState>(initAddress);
+  console.log("check address", address);
   const [mode, setMode] = React.useState<PaletteMode>("light");
   const [showCustomTheme, setShowCustomTheme] = React.useState(true);
   const checkoutTheme = createTheme(getCheckoutTheme(mode));
   const defaultTheme = createTheme({ palette: { mode } });
   const [activeStep, setActiveStep] = React.useState(0);
+
 
   const toggleColorMode = () => {
     setMode((prev) => (prev === "dark" ? "light" : "dark"));
@@ -374,10 +404,11 @@ export default function Checkout() {
                       Previous
                     </Button>
                   )}
+
                   <Button
                     variant="contained"
                     endIcon={<ChevronRightRoundedIcon />}
-                    onClick={handleNext}
+                    onClick={() => handleNext()}
                     sx={{
                       width: { xs: "100%", sm: "fit-content" },
                     }}
@@ -390,10 +421,10 @@ export default function Checkout() {
           </Box>
         </Grid>
       </Grid>
-      <ToggleCustomTheme
+      {/* <ToggleCustomTheme
         toggleCustomTheme={toggleCustomTheme}
         showCustomTheme={showCustomTheme}
-      />
+      /> */}
     </ThemeProvider>
   );
 }
