@@ -8,8 +8,6 @@ const AboutUsPage = async () => {
     nextOption: { cache: "no-store" },
   });
   const info = res?.data ?? [];
-  console.log("info", info);
-
   return <AboutUs info={info} />;
 };
 export default AboutUsPage;

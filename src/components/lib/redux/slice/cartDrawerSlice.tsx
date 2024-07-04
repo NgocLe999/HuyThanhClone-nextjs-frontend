@@ -13,21 +13,6 @@ export const fetchProductAddCart = createAsyncThunk(
   }
 );
 
-interface IState {
-  isFetching: boolean;
-  isOpenCart: boolean;
-  totalPay: number;
-  infoOrder: {
-    fullName: string;
-    address: string;
-    phone: string;
-    email: string;
-    note: string;
-  };
-  note: string;
-  data: IProduct[];
-}
-
 const initialState: IState = {
   isFetching: true,
   isOpenCart: false,

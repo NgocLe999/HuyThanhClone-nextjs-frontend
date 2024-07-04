@@ -11,19 +11,13 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckIcon from "@mui/icons-material/Check";
 import { useAppDispatch, useAppSelector } from "~/lib/redux/hooks";
 import { checkoutOrder } from "~/lib/redux/slice/cartDrawerSlice";
+import { sendRequest } from "~/utils/api";
 
 const FormGrid = styled(Grid)(() => ({
   display: "flex",
   flexDirection: "column",
 }));
 
-interface IState {
-  fullName: string;
-  address: string;
-  phone: string;
-  email: string;
-  note: string;
-}
 // type Inputs = {
 //   example: string;
 //   exampleRequired: string;
@@ -37,13 +31,35 @@ export default function AddressForm(props: any) {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<IState>();
+  } = useForm<IStateInfo>();
   const [color, setColor] = React.useState("warning");
-  const onSubmit: SubmitHandler<IState> = (data) => {
+  const createCustomer = async (state: IState) => {
+    const idProductOrdered = state.data.map((product) => product._id);
+    const res = await sendRequest<IBackendRes<ICustomer>>({
+      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/customers`,
+      method: "POST",
+      body: {
+        name: state.infoOrder.fullName,
+        address: state.infoOrder.address,
+        email: state.infoOrder.email,
+        phone: state.infoOrder.phone,
+        product_order: idProductOrdered,
+        quantity: state.data.length,
+      },
+      nextOption: { cache: "no-store" },
+    });
+    const customer = res?.data ?? [];
+    return customer;
+  };
+
+  const onSubmit: SubmitHandler<IStateInfo> = async (data) => {
     setColor("success");
     dispatch(checkoutOrder(data));
+    if (data) {
+      const customer = await createCustomer(state);
+    }
   };
-  console.log("check state:", state);
+
   return (
     <form
       style={{

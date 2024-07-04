@@ -59,4 +59,35 @@ declare global {
     };
     result?: T[];
   }
+  interface ICustomer {
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+    product_order: string;
+    quantity: number;
+  }
+
+  interface IState {
+    isFetching: boolean;
+    isOpenCart: boolean;
+    totalPay: number;
+    infoOrder: {
+      fullName: string;
+      address: string;
+      phone: string;
+      email: string;
+      note: string;
+    };
+    note: string;
+    data: IProduct[];
+  }
+  
+  interface IStateInfo {
+    fullName: string;
+    address: string;
+    phone: string;
+    email: string;
+    note: string;
+  }
 }

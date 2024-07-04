@@ -33,6 +33,7 @@ import ToggleColorMode from "./ToggleColorMode";
 import Link from "next/link";
 import { useAppSelector } from "~/lib/redux/hooks";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { sendRequest } from "~/utils/api";
 
 interface ToggleCustomThemeProps {
   showCustomTheme: Boolean;
@@ -126,13 +127,12 @@ export default function Checkout() {
     countryZip: "",
   };
   const [address, setAddress] = React.useState<IState>(initAddress);
-  console.log("check address", address);
+
   const [mode, setMode] = React.useState<PaletteMode>("light");
   const [showCustomTheme, setShowCustomTheme] = React.useState(true);
   const checkoutTheme = createTheme(getCheckoutTheme(mode));
   const defaultTheme = createTheme({ palette: { mode } });
   const [activeStep, setActiveStep] = React.useState(0);
-
 
   const toggleColorMode = () => {
     setMode((prev) => (prev === "dark" ? "light" : "dark"));
@@ -149,6 +149,8 @@ export default function Checkout() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+
 
   return (
     <ThemeProvider theme={showCustomTheme ? checkoutTheme : defaultTheme}>
@@ -352,15 +354,18 @@ export default function Checkout() {
                   <strong>&nbsp;#140396</strong>. We have emailed your order
                   confirmation and will update you once its shipped.
                 </Typography>
-                <Button
-                  variant="contained"
-                  sx={{
-                    alignSelf: "start",
-                    width: { xs: "100%", sm: "auto" },
-                  }}
-                >
-                  Go to my orders
-                </Button>
+                <Link href={"/"}>
+                  {" "}
+                  <Button
+                    variant="contained"
+                    sx={{
+                      alignSelf: "start",
+                      width: { xs: "100%", sm: "auto" },
+                    }}
+                  >
+                    Về trang chủ
+                  </Button>
+                </Link>
               </Stack>
             ) : (
               <React.Fragment>
