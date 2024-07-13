@@ -48,3 +48,22 @@ export const callFetchProductDetails = async (id: string) => {
   const productDetails = res?.data ?? [];
   return productDetails;
 };
+
+export const getCustomerOrder = async (email: string) => {
+  const res = await sendRequest<IBackendRes<ICustomer>>({
+    url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/customers/email/`,
+    method: "POST",
+    queryParams: {
+      email: email,
+    },
+    nextOption: { cache: "no-store" },
+  });
+  return res?.data;
+};
+
+export const sendEmail = async (id: string) => {
+  await sendRequest<IBackendRes<ICustomer>>({
+    url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/mail/${id}`,
+    method: "GET",
+  });
+};

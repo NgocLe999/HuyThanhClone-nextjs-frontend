@@ -174,7 +174,7 @@ export default function TemporaryCartDrawer() {
           href={"/checkout"}
           onClick={() => {
             dispatch(setShowCart(false));
-            console.log("check state", state);
+  
           }}
         >
           <Button

@@ -22,6 +22,10 @@ import {
   setShowCart,
 } from "~/lib/redux/slice/cartDrawerSlice";
 import { useToast } from "~/custom-hook/useToast";
+import { useState } from "react";
+import PopupFilter from "./popup.filter";
+import PopupSortBy from "./popup.sortedby";
+// import { setShowFilter } from "~/lib/redux/slice/filterSlice";
 
 function srcset(image: string, size: number, rows = 1, cols = 1) {
   return {
@@ -241,16 +245,30 @@ export function QuiltedImageList(props: any) {
 
 const CollectionsPage = (props: any) => {
   const { productItem } = props;
+  const [open, setOpen] = useState(false);
+  const [openSortBy, setOpenSortBy] = useState(false);
+  const handleShowFilter = () => {
+    setOpen(true);
+  };
+  const handleShowShortBy = () => {
+    setOpenSortBy(true);
+  };
   return (
     <Container maxWidth="xl">
       <h1>TẤT CẢ SẢN PHẨM</h1>
       <div className="filter">
-        <div>Bộ lọc</div>
-        <KeyboardArrowDownIcon />
-        <div>Sắp xếp theo</div>
-        <KeyboardArrowDownIcon />
+        <Button onClick={handleShowFilter} sx={{ fontSize: 16 }}>
+          Bộ Lọc
+          <KeyboardArrowDownIcon />
+        </Button>
+        <Button onClick={handleShowShortBy} sx={{ fontSize: 16 }}>
+          Sắp Xếp Theo
+          <KeyboardArrowDownIcon />
+        </Button>
       </div>
       <QuiltedImageList productItem={productItem} />
+      <PopupFilter open={open} setOpen={setOpen} />
+      <PopupSortBy openSortBy={openSortBy} setOpenSortBy={setOpenSortBy} />
     </Container>
   );
 };

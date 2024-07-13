@@ -8,13 +8,15 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import _, { debounce } from "lodash";
 import { sendRequest } from "~/utils/api";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "~/lib/redux/hooks";
+import { setShowCart } from "~/lib/redux/slice/cartDrawerSlice";
 
 const HeaderSearch = () => {
   const [query, setQuery] = useState<string>("");
   const [results, setResults] = useState([]);
   const router = useRouter();
   const [displaySearch, setDisplaySearch] = useState("none");
-
+  const dispatch = useAppDispatch();
   const debouncedSearch = useCallback(
     debounce(async (query) => {
       if (query) {
@@ -56,6 +58,11 @@ const HeaderSearch = () => {
     setDisplaySearch("none");
     setResults([]);
   };
+
+  const handleCartDrawer = () => {
+    dispatch(setShowCart(true));
+  };
+
   return (
     <Box
       component="form"
@@ -134,6 +141,7 @@ const HeaderSearch = () => {
         type="button"
         sx={{ p: "6px", color: "#333333", backgroundColor: "#f1f1f1" }}
         aria-label="search"
+        onClick={() => handleCartDrawer()}
       >
         <ShoppingCartIcon />
       </IconButton>

@@ -9,7 +9,7 @@ const PopupNews = () => {
         flexDirection: "column",
         gap: 1,
         height: "100%",
-        width: "100%",
+        width: "500px",
         padding: "8px 22px",
       }}
     >

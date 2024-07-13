@@ -5,6 +5,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import { useAppSelector } from "~/lib/redux/hooks";
+import { Diversity1Rounded } from "@mui/icons-material";
 
 const products = [
   {
@@ -78,7 +79,7 @@ export default function Info({ totalPrice }: InfoProps) {
         sx={{ marginTop: "20px" }}
       >
         <strong>GHI CHÚ: </strong>
-        <span>{orderedProduct.note}</span>
+        <p>{orderedProduct.note}</p>
       </Typography>
     </React.Fragment>
   );

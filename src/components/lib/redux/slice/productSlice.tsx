@@ -16,7 +16,7 @@ interface IState {
   data: IProduct;
 }
 const initialState = {
-  isFetching: true,
+  isFetching: false,
   isOpen: false,
   data: {},
 };

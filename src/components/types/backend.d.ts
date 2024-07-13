@@ -69,6 +69,7 @@ declare global {
   }
 
   interface IState {
+    _id: string;
     isFetching: boolean;
     isOpenCart: boolean;
     totalPay: number;

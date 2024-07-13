@@ -14,7 +14,8 @@ export const fetchProductAddCart = createAsyncThunk(
 );
 
 const initialState: IState = {
-  isFetching: true,
+  _id: "",
+  isFetching: false,
   isOpenCart: false,
   totalPay: 0,
   infoOrder: {
@@ -81,6 +82,10 @@ const cartDrawerSlice = createSlice({
     },
     checkoutOrder: (state, action) => {
       state.infoOrder = action.payload;
+      state.isFetching = true;
+    },
+    setIdOrder: (state, action) => {
+      state._id = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -127,6 +132,7 @@ export const {
   decreaseProduct,
   noteOrder,
   checkoutOrder,
+  setIdOrder,
 } = cartDrawerSlice.actions;
 
 export default cartDrawerSlice.reducer;

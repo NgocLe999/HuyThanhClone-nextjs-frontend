@@ -33,8 +33,10 @@ const style = {
 export default function PopupPreviewViewProduct(props: any) {
   const dispatch = useAppDispatch();
   // const [productDetails, setProductDetails] = useState<IProduct>(initState);
+  //@ts-ignore
   const isOpen = useAppSelector((state) => state.product.isOpen as boolean);
   const productDetails = useAppSelector(
+    //@ts-ignore
     (state) => state.product.data as IProduct
   );
 

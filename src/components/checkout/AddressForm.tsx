@@ -45,6 +45,8 @@ export default function AddressForm(props: any) {
         phone: state.infoOrder.phone,
         product_order: idProductOrdered,
         quantity: state.data.length,
+        total: state.totalPay,
+        note: state.note,
       },
       nextOption: { cache: "no-store" },
     });
@@ -55,8 +57,8 @@ export default function AddressForm(props: any) {
   const onSubmit: SubmitHandler<IStateInfo> = async (data) => {
     setColor("success");
     dispatch(checkoutOrder(data));
-    if (data) {
-      const customer = await createCustomer(state);
+    if (state.isFetching === true) {
+      await createCustomer(state);
     }
   };
 

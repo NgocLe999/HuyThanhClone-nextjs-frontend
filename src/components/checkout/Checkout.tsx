@@ -31,9 +31,10 @@ import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 import ToggleColorMode from "./ToggleColorMode";
 import Link from "next/link";
-import { useAppSelector } from "~/lib/redux/hooks";
+import { useAppDispatch, useAppSelector } from "~/lib/redux/hooks";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { sendRequest } from "~/utils/api";
+import { getCustomerOrder, sendEmail, sendRequest } from "~/utils/api";
+import { setIdOrder } from "~/lib/redux/slice/cartDrawerSlice";
 
 interface ToggleCustomThemeProps {
   showCustomTheme: Boolean;
@@ -134,6 +135,8 @@ export default function Checkout() {
   const defaultTheme = createTheme({ palette: { mode } });
   const [activeStep, setActiveStep] = React.useState(0);
 
+  const state = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
   const toggleColorMode = () => {
     setMode((prev) => (prev === "dark" ? "light" : "dark"));
   };
@@ -142,15 +145,25 @@ export default function Checkout() {
     setShowCustomTheme((prev) => !prev);
   };
 
-  const handleNext = () => {
+  const handleNext = async (activeStep: number) => {
     setActiveStep(activeStep + 1);
+    //active step === 1
+    if (activeStep === 1) {
+      const customer = await getCustomerOrder(state.infoOrder.email);
+      //@ts-ignore
+      dispatch(setIdOrder(customer._id));
+    }
+    //active step === 2
+    if (activeStep === 2) {
+      if (state._id) {
+        await sendEmail(state._id);
+      }
+    }
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-
-
 
   return (
     <ThemeProvider theme={showCustomTheme ? checkoutTheme : defaultTheme}>
@@ -393,7 +406,7 @@ export default function Checkout() {
                         display: { xs: "none", sm: "flex" },
                       }}
                     >
-                      Previous
+                      Quay lại
                     </Button>
                   )}
                   {activeStep !== 0 && (
@@ -406,19 +419,19 @@ export default function Checkout() {
                         display: { xs: "flex", sm: "none" },
                       }}
                     >
-                      Previous
+                      Quay lại
                     </Button>
                   )}
 
                   <Button
                     variant="contained"
                     endIcon={<ChevronRightRoundedIcon />}
-                    onClick={() => handleNext()}
+                    onClick={() => handleNext(activeStep)}
                     sx={{
                       width: { xs: "100%", sm: "fit-content" },
                     }}
                   >
-                    {activeStep === steps.length - 1 ? "Place order" : "Next"}
+                    {activeStep === steps.length - 1 ? "Đặt hàng" : "Tiếp theo"}
                   </Button>
                 </Box>
               </React.Fragment>
