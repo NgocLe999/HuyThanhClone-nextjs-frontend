@@ -15,7 +15,6 @@ const ProductDetailService = async ({
   //@ts-ignore
   // const productItem = res?.data?.result ?? [];
   // console.log("productItem", productItem);
-
   return (
     <Container maxWidth="xl" sx={{ marginTop: "35px" }}>
       <ProductDetail productDetails={productDetails} />

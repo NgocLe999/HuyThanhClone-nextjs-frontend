@@ -1,3 +1,4 @@
+import aqp, { AqpQuery } from "api-query-params";
 import queryString from "query-string";
 
 export const sendRequest = async <T>(props: IRequest) => {
@@ -67,3 +68,23 @@ export const sendEmail = async (id: string) => {
     method: "GET",
   });
 };
+
+// export const apiFilterProduct = async () =>
+//   // price: number
+//   // color: string,
+//   // material: string,
+//   // type: string
+//   {
+//     const res = await sendRequest<IBackendRes<IResPaginate<IProduct>>>({
+//       url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/product`,
+//       method: "GET",
+//       queryParams: {
+//         currentPage: 1,
+//         pageSize: 100,
+//         populate: "featured_image,image",
+//         fields: "featured_image.src,image.src",
+//         price: {},
+//       },
+//     });
+//     return res?.data;
+//   };

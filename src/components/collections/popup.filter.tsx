@@ -8,6 +8,8 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { Button } from "@mui/material";
 import { ButtonCollections } from "~/header/button/button.menu";
+import { usePathname, useRouter } from "next/navigation";
+import { useToast } from "~/custom-hook/useToast";
 
 const style = {
   position: "absolute" as "absolute",
@@ -29,6 +31,18 @@ export default function PopupFilter(props: any) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [price, setPrice] = React.useState<number>(0);
+  const [color, setColor] = React.useState("");
+  const [material, setMaterial] = React.useState("");
+  const [type, setType] = React.useState("");
+  const router = useRouter();
+  const pathname = usePathname();
+  const toast = useToast();
+  const handleSubmit = () => {
+    setOpen(false);
+    router.push(`${pathname}?price=${price}`);
+    toast.success("VUI LÒNG ĐỢI TRONG GIÂY LÁT...");
+  };
   return (
     <>
       <Modal
@@ -48,36 +62,42 @@ export default function PopupFilter(props: any) {
               </FormLabel>
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="female"
+                defaultValue={1000000}
                 name="radio-buttons-group"
               >
                 <FormControlLabel
-                  value="1000000"
+                  onChange={(e: any) => setPrice(e.target.value)}
+                  value={999999}
                   control={<Radio />}
                   label="Nhỏ hơn 1,000,000đ"
                 />
                 <FormControlLabel
-                  value="3000000"
+                  onChange={(e: any) => setPrice(e.target.value)}
+                  value={3000001}
                   control={<Radio />}
                   label="Từ 1,000,000đ-3,000,000đ"
                 />
                 <FormControlLabel
-                  value="5000000"
+                  onChange={(e: any) => setPrice(e.target.value)}
+                  value={5000001}
                   control={<Radio />}
                   label="Từ 3,000,000đ-5,000,000đ"
                 />
                 <FormControlLabel
-                  value="7000000"
+                  onChange={(e: any) => setPrice(e.target.value)}
+                  value={7000001}
                   control={<Radio />}
                   label="Từ 5,000,000đ-7,000,000đ"
                 />
                 <FormControlLabel
-                  value="10000000"
+                  onChange={(e: any) => setPrice(e.target.value)}
+                  value={10000000}
                   control={<Radio />}
                   label="Từ 7,000,000đ-10,000,000đ"
                 />
                 <FormControlLabel
-                  value="10000000"
+                  onChange={(e: any) => setPrice(e.target.value)}
+                  value={10000001}
                   control={<Radio />}
                   label="Lớn hơn 10,000,000đ"
                 />
@@ -92,20 +112,23 @@ export default function PopupFilter(props: any) {
               </FormLabel>
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="vàng"
+                defaultValue="Màu vàng"
                 name="radio-buttons-group"
               >
                 <FormControlLabel
+                  onChange={(e: any) => setColor(e.target.value)}
                   value="Màu vàng"
                   control={<Radio />}
                   label="Màu vàng"
                 />
                 <FormControlLabel
+                  onChange={(e: any) => setColor(e.target.value)}
                   value="Màu trắng"
                   control={<Radio />}
                   label="Màu trắng"
                 />
                 <FormControlLabel
+                  onChange={(e: any) => setColor(e.target.value)}
                   value="Màu hồng"
                   control={<Radio />}
                   label="Màu hồng"
@@ -124,9 +147,24 @@ export default function PopupFilter(props: any) {
                 defaultValue="14k"
                 name="radio-buttons-group"
               >
-                <FormControlLabel value="10k" control={<Radio />} label="10k" />
-                <FormControlLabel value="14k" control={<Radio />} label="14k" />
-                <FormControlLabel value="18k" control={<Radio />} label="18k" />
+                <FormControlLabel
+                  onChange={(e: any) => setMaterial(e.target.value)}
+                  value="10k"
+                  control={<Radio />}
+                  label="10k"
+                />
+                <FormControlLabel
+                  onChange={(e: any) => setMaterial(e.target.value)}
+                  value="14k"
+                  control={<Radio />}
+                  label="14k"
+                />
+                <FormControlLabel
+                  onChange={(e: any) => setMaterial(e.target.value)}
+                  value="18k"
+                  control={<Radio />}
+                  label="18k"
+                />
               </RadioGroup>
             </FormControl>
             <FormControl>
@@ -142,21 +180,25 @@ export default function PopupFilter(props: any) {
                 name="radio-buttons-group"
               >
                 <FormControlLabel
+                  onChange={(e: any) => setType(e.target.value)}
                   value="Kim cương"
                   control={<Radio />}
                   label="Kim cương"
                 />
                 <FormControlLabel
+                  onChange={(e: any) => setType(e.target.value)}
                   value="Moissanite"
                   control={<Radio />}
                   label="Moissanite"
                 />
                 <FormControlLabel
+                  onChange={(e: any) => setType(e.target.value)}
                   value="Đá Cubic Zirconia"
                   control={<Radio />}
                   label="Đá Cubic Zirconia"
                 />
                 <FormControlLabel
+                  onChange={(e: any) => setType(e.target.value)}
                   value="Đá Màu"
                   control={<Radio />}
                   label="Đá Màu"
@@ -165,7 +207,8 @@ export default function PopupFilter(props: any) {
             </FormControl>
           </Box>
           <Button
-            onClick={() => setOpen(false)}
+            onClick={handleSubmit}
+            // onClick={() => setOpen(false)}
             sx={{ padding: 2, marginTop: "10px", fontSize: 17 }}
             color="error"
           >

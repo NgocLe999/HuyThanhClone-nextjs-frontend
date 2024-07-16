@@ -8,3 +8,7 @@ export function useDidMount() {
 
   return didMount;
 }
+
+export const filterProductByPrice = () => {
+  
+};

@@ -50,6 +50,12 @@ declare global {
     weight: string;
   }
 
+  interface ICollection {
+    _id: string;
+    name: string;
+    product: IProduct[];
+  }
+
   interface IResPaginate<T> {
     meta: {
       currentPage: string;
@@ -59,6 +65,7 @@ declare global {
     };
     result?: T[];
   }
+
   interface ICustomer {
     name: string;
     email: string;
@@ -83,7 +90,7 @@ declare global {
     note: string;
     data: IProduct[];
   }
-  
+
   interface IStateInfo {
     fullName: string;
     address: string;

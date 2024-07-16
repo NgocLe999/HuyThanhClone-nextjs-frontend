@@ -20,6 +20,7 @@
     "@mui/material-nextjs": "^5.15.11",
     "@reduxjs/toolkit": "^2.2.6",
     "@types/lodash": "^4.17.5",
+    "api-query-params": "^5.4.0",
     "fancybox": "^3.0.1",
     "immer": "^10.1.1",
     "lodash": "^4.17.21",
